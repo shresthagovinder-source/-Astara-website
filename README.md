@@ -2,8 +2,12 @@
 
 Official website for the Astara cryptocurrency project.
 
-## Project Vision
-Astara aims to build a fast, secure, transparent, and global decentralized finance ecosystem.
+## Phase 1 v2 Update
+- Premium logo added
+- Favicon added
+- Updated hero section
+- Whitepaper download button
+- Improved crypto-style design
+- Mobile responsive layout
 
-## Founder
-Govinder Shrestha
+Founder: Govinder Shrestha
