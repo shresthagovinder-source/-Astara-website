@@ -42,11 +42,11 @@ if (canvas) {
   earth.rotation.y = -1.2;
   scene.add(earth);
 
-  const atmosphereGeometry = new THREE.SphereGeometry(2.08, 128, 128);
+  const atmosphereGeometry = new THREE.SphereGeometry(2.06, 128, 128);
   const atmosphereMaterial = new THREE.MeshBasicMaterial({
     color: 0x38eaff,
     transparent: true,
-    opacity: 0.12,
+    opacity: 0.18,
     side: THREE.BackSide
   });
 
