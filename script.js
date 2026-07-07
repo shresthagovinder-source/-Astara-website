@@ -31,13 +31,13 @@ if (canvas) {
   const loader = new THREE.TextureLoader();
   const earthTexture = loader.load("Textures/8k_earth_daymap.jpg");
 
-  const earthGeometry = new THREE.SphereGeometry(2, 512, 512);
+  const earthGeometry = new THREE.SphereGeometry(2, 256, 256);
 
   const earthMaterial = new THREE.MeshPhongMaterial({
     map: earthTexture,
     shininess: 12,
     flatShading:false
-  });
+  })
 
   const earth = new THREE.Mesh(earthGeometry, earthMaterial);
   earth.rotation.y = -1.2;
