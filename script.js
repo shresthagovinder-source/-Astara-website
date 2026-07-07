@@ -72,7 +72,8 @@ starsGeometry.setAttribute(
 );
 
 const starsMaterial = new THREE.PointsMaterial({
-    size: 0.8
+    color: 0xffffff,
+    size: 2.5
 });
 
 const stars = new THREE.Points(
