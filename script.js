@@ -18,12 +18,13 @@ if (canvas) {
     });
 
     renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
 
     const loader = new THREE.TextureLoader();
 
     const earthTexture = loader.load("Textures/8k_earth_daymap.jpg");
 
-    const geometry = new THREE.SphereGeometry(2, 128, 128);
+    const geometry = new THREE.SphereGeometry(2, 256, 256);
 
     const material = new THREE.MeshStandardMaterial({
         map: earthTexture
