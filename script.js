@@ -43,7 +43,7 @@ if (canvas) {
 
   function animate() {
     requestAnimationFrame(animate);
-    earth.rotation.y += 0.002;
+    earth.rotation.y += 0.0008;
     renderer.render(scene, camera);
   }
 
