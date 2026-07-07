@@ -26,7 +26,9 @@ if (canvas) {
   const earthGeometry = new THREE.SphereGeometry(2, 256, 256);
 
   const earthMaterial = new THREE.MeshStandardMaterial({
-    map: earthTexture
+    map: earthTexture,
+    roughness: 0.9,
+    metalness: 0.0
   });
 
   const earth = new THREE.Mesh(earthGeometry, earthMaterial);
