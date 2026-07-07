@@ -47,7 +47,7 @@ if (canvas) {
   const atmosphereMaterial = new THREE.MeshBasicMaterial({
     color: 0x38eaff,
     transparent: true,
-    opacity: 0.18,
+    opacity: 0.0.08,
     side: THREE.BackSide
   });
 
