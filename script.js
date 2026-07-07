@@ -9,7 +9,7 @@ if (canvas) {
     0.1,
     1000
   );
-  camera.position.z = 6;
+  camera.position.z = 7;
 
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
