@@ -1,58 +1,91 @@
 const canvas = document.getElementById("earthCanvas");
 
 if (canvas) {
+  const scene = new THREE.Scene();
 
-    const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+  camera.position.z = 5;
 
-    const camera = new THREE.PerspectiveCamera(
-        45,
-        canvas.clientWidth / canvas.clientHeight,
-        0.1,
-        1000
-    );
+  const renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    antialias: true,
+    alpha: true
+  });
 
-    const renderer = new THREE.WebGLRenderer({
-        canvas,
-        antialias: true,
-        alpha: true
-    });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+  function resize() {
+    const size = Math.min(canvas.clientWidth, canvas.clientHeight);
+    renderer.setSize(size, size, false);
+    camera.aspect = 1;
+    camera.updateProjectionMatrix();
+  }
 
-    const loader = new THREE.TextureLoader();
+  resize();
 
-    const earthTexture = loader.load("Textures/8k_earth_daymap.jpg");
+  const loader = new THREE.TextureLoader();
+  const earthTexture = loader.load("Textures/8k_earth_daymap.jpg");
 
-    const geometry = new THREE.SphereGeometry(2, 256, 256);
+  const earthGeometry = new THREE.SphereGeometry(2, 512, 512);
 
-    const material = new THREE.MeshStandardMaterial({
-        map: earthTexture
-    });
+  const earthMaterial = new THREE.MeshPhongMaterial({
+    map: earthTexture,
+    shininess: 12
+  });
 
-    const earth = new THREE.Mesh(geometry, material);
+  const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+  earth.rotation.y = -1.2;
+  scene.add(earth);
 
-    scene.add(earth);
+  const atmosphereGeometry = new THREE.SphereGeometry(2.08, 128, 128);
+  const atmosphereMaterial = new THREE.MeshBasicMaterial({
+    color: 0x38eaff,
+    transparent: true,
+    opacity: 0.12,
+    side: THREE.BackSide
+  });
 
-    const light = new THREE.DirectionalLight(0xffffff, 2);
-    light.position.set(5, 3, 5);
-    scene.add(light);
+  const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+  scene.add(atmosphere);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambient);
+  const sunLight = new THREE.DirectionalLight(0xffffff, 2.5);
+  sunLight.position.set(5, 3, 5);
+  scene.add(sunLight);
 
-    camera.position.z = 5;
+  const softLight = new THREE.AmbientLight(0xffffff, 0.45);
+  scene.add(softLight);
 
-    function animate() {
+  let isDragging = false;
+  let previousX = 0;
 
-        requestAnimationFrame(animate);
+  canvas.addEventListener("mousedown", function (e) {
+    isDragging = true;
+    previousX = e.clientX;
+  });
 
-        earth.rotation.y += 0.0025;
+  window.addEventListener("mouseup", function () {
+    isDragging = false;
+  });
 
-        renderer.render(scene, camera);
+  window.addEventListener("mousemove", function (e) {
+    if (!isDragging) return;
+    const deltaX = e.clientX - previousX;
+    earth.rotation.y += deltaX * 0.005;
+    previousX = e.clientX;
+  });
 
+  window.addEventListener("resize", resize);
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    if (!isDragging) {
+      earth.rotation.y += 0.0018;
+      atmosphere.rotation.y += 0.0018;
     }
 
-    animate();
+    renderer.render(scene, camera);
+  }
 
+  animate();
 }
