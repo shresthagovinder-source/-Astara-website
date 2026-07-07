@@ -47,19 +47,7 @@ const atmosphere = new THREE.Mesh(
 );
 
 scene.add(atmosphere);
-const atmosphereMaterial = new THREE.MeshBasicMaterial({
-    color: 0x4fc3ff,
-    transparent: true,
-    opacity: 0.15,
-    side: THREE.BackSide
-});
 
-const atmosphere = new THREE.Mesh(
-    atmosphereGeometry,
-    atmosphereMaterial
-);
-
-scene.add(atmosphere);
 
   const light = new THREE.DirectionalLight(0xffffff, 2);
   light.position.set(5, 3, 5);
