@@ -1,33 +1,57 @@
 const canvas = document.getElementById("earthCanvas");
 
 if (canvas) {
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
 
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    const scene = new THREE.Scene();
 
-  const geometry = new THREE.SphereGeometry(2, 64, 64);
-  const material = new THREE.MeshStandardMaterial({
-    color: 0x1e90ff,
-    wireframe: true
-  });
+    const camera = new THREE.PerspectiveCamera(
+        45,
+        canvas.clientWidth / canvas.clientHeight,
+        0.1,
+        1000
+    );
 
-  const earth = new THREE.Mesh(geometry, material);
-  scene.add(earth);
+    const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true
+    });
 
-  const light = new THREE.PointLight(0xffffff, 2);
-  light.position.set(5, 5, 5);
-  scene.add(light);
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
-  camera.position.z = 6;
+    const loader = new THREE.TextureLoader();
 
-  function animate() {
-    requestAnimationFrame(animate);
-    earth.rotation.y += 0.006;
-    earth.rotation.x += 0.001;
-    renderer.render(scene, camera);
-  }
+    const earthTexture = loader.load("Textures/8k_earth_daymap.jpg");
 
-  animate();
+    const geometry = new THREE.SphereGeometry(2, 128, 128);
+
+    const material = new THREE.MeshStandardMaterial({
+        map: earthTexture
+    });
+
+    const earth = new THREE.Mesh(geometry, material);
+
+    scene.add(earth);
+
+    const light = new THREE.DirectionalLight(0xffffff, 2);
+    light.position.set(5, 3, 5);
+    scene.add(light);
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambient);
+
+    camera.position.z = 5;
+
+    function animate() {
+
+        requestAnimationFrame(animate);
+
+        earth.rotation.y += 0.0025;
+
+        renderer.render(scene, camera);
+
+    }
+
+    animate();
+
 }
