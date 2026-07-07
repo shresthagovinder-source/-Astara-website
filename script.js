@@ -8,7 +8,7 @@ if (canvas) {
     canvas.clientWidth / canvas.clientHeight,
     0.1,
     1000
-);
+  );
   camera.position.z = 5;
 
   const renderer = new THREE.WebGLRenderer({
@@ -17,79 +17,31 @@ if (canvas) {
     alpha: true
   });
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  function resize() {
-    const size = Math.min(canvas.clientWidth, canvas.clientHeight);
-    renderer.setSize(size, size, false);
-    camera.aspect = 1;
-    camera.updateProjectionMatrix();
-  }
-
-  resize();
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
 
   const loader = new THREE.TextureLoader();
   const earthTexture = loader.load("Textures/8k_earth_daymap.jpg");
 
   const earthGeometry = new THREE.SphereGeometry(2, 256, 256);
 
-  const earthMaterial = new THREE.MeshPhongMaterial({
-    map: earthTexture,
-    shininess: 12,
-    flatShading:false
-  })
+  const earthMaterial = new THREE.MeshStandardMaterial({
+    map: earthTexture
+  });
 
   const earth = new THREE.Mesh(earthGeometry, earthMaterial);
-  earth.rotation.y = -1.2;
   scene.add(earth);
 
-  const atmosphereGeometry = new THREE.SphereGeometry(2.02, 256, 256);
-  const atmosphereMaterial = new THREE.MeshBasicMaterial({
-    color: 0x38eaff,
-    transparent: true,
-    opacity: 0.0.08,
-    side: THREE.BackSide
-  });
+  const light = new THREE.DirectionalLight(0xffffff, 2);
+  light.position.set(5, 3, 5);
+  scene.add(light);
 
-  const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
-  scene.add(atmosphere);
-
-  const sunLight = new THREE.DirectionalLight(0xffffff, 2.5);
-  sunLight.position.set(5, 3, 5);
-  scene.add(sunLight);
-
-  const softLight = new THREE.AmbientLight(0xffffff, 0.45);
-  scene.add(softLight);
-
-  let isDragging = false;
-  let previousX = 0;
-
-  canvas.addEventListener("mousedown", function (e) {
-    isDragging = true;
-    previousX = e.clientX;
-  });
-
-  window.addEventListener("mouseup", function () {
-    isDragging = false;
-  });
-
-  window.addEventListener("mousemove", function (e) {
-    if (!isDragging) return;
-    const deltaX = e.clientX - previousX;
-    earth.rotation.y += deltaX * 0.005;
-    previousX = e.clientX;
-  });
-
-  window.addEventListener("resize", resize);
+  const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(ambient);
 
   function animate() {
     requestAnimationFrame(animate);
-
-    if (!isDragging) {
-      earth.rotation.y += 0.0018;
-      atmosphere.rotation.y += 0.0018;
-    }
-
+    earth.rotation.y += 0.002;
     renderer.render(scene, camera);
   }
 
