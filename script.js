@@ -84,7 +84,9 @@ scene.add(stars);
 
 function animate() {
     requestAnimationFrame(animate);
-    earth.rotation.y += 0.0008;
+   earth.rotation.y += 0.0008;
+atmosphere.rotation.y += 0.0008;
+stars.rotation.y += 0.0002;
     renderer.render(scene, camera);
   }
 
