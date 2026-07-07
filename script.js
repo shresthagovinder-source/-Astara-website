@@ -33,11 +33,11 @@ if (canvas) {
 
   const earth = new THREE.Mesh(earthGeometry, earthMaterial);
   scene.add(earth);
-  const atmosphereGeometry = new THREE.SphereGeometry(1.74, 128, 128);
+  const atmosphereGeometry = new THREE.SphereGeometry(1.75, 128, 128);
 const atmosphereMaterial = new THREE.MeshBasicMaterial({
     color: 0x4cf3ff,
     transparent: true,
-    opacity: 0.15,
+    opacity: 0.35,
     side: THREE.BackSide
 });
 
