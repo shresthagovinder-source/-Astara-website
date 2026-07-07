@@ -55,8 +55,33 @@ scene.add(atmosphere);
 
   const ambient = new THREE.AmbientLight(0xffffff, 0.6);
   scene.add(ambient);
+const starsGeometry = new THREE.BufferGeometry();
+const starsCount = 5000;
 
-  function animate() {
+const positions = [];
+
+for (let i = 0; i < starsCount; i++) {
+    positions.push((Math.random() - 0.5) * 2000);
+    positions.push((Math.random() - 0.5) * 2000);
+    positions.push((Math.random() - 0.5) * 2000);
+}
+
+starsGeometry.setAttribute(
+    'position',
+    new THREE.Float32BufferAttribute(positions, 3)
+);
+
+const starsMaterial = new THREE.PointsMaterial({
+    size: 0.8
+});
+
+const stars = new THREE.Points(
+    starsGeometry,
+    starsMaterial
+);
+scene.add(stars);
+
+function animate() {
     requestAnimationFrame(animate);
     earth.rotation.y += 0.0008;
     renderer.render(scene, camera);
