@@ -33,6 +33,33 @@ if (canvas) {
 
   const earth = new THREE.Mesh(earthGeometry, earthMaterial);
   scene.add(earth);
+  const atmosphereGeometry = new THREE.SphereGeometry(1.74, 128, 128);
+const atmosphereMaterial = new THREE.MeshBasicMaterial({
+    color: 0x4cf3ff,
+    transparent: true,
+    opacity: 0.15,
+    side: THREE.BackSide
+});
+
+const atmosphere = new THREE.Mesh(
+    atmosphereGeometry,
+    atmosphereMaterial
+);
+
+scene.add(atmosphere);
+const atmosphereMaterial = new THREE.MeshBasicMaterial({
+    color: 0x4fc3ff,
+    transparent: true,
+    opacity: 0.15,
+    side: THREE.BackSide
+});
+
+const atmosphere = new THREE.Mesh(
+    atmosphereGeometry,
+    atmosphereMaterial
+);
+
+scene.add(atmosphere);
 
   const light = new THREE.DirectionalLight(0xffffff, 2);
   light.position.set(5, 3, 5);
