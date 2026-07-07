@@ -23,7 +23,7 @@ if (canvas) {
   const loader = new THREE.TextureLoader();
   const earthTexture = loader.load("Textures/8k_earth_daymap.jpg");
 
-  const earthGeometry = new THREE.SphereGeometry(2, 256, 256);
+ const earthGeometry = new THREE.SphereGeometry(2, 64, 64);
 
   const earthMaterial = new THREE.MeshStandardMaterial({
     map: earthTexture,
